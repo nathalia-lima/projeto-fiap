@@ -17,18 +17,29 @@ public class ConfiguracoesSeguranca {
         return new BCryptPasswordEncoder();
     }
 
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, UserDetailsService usuarioService) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // facilita uso no Postman
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login/**").authenticated()
-                        .requestMatchers("/usuario").permitAll()// exige login para /admin
-                        .anyRequest().permitAll() // permite todos os outros
-                )
-                .httpBasic(Customizer.withDefaults())
-                .userDetailsService(usuarioService); // usa autenticação HTTP Basic
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/v3/api-docs/**",
+                    "/swagger-ui.html",
+                    "/swagger-ui/**"
+                ).permitAll()
+
+                // Seus endpoints:
+                .requestMatchers("/usuario").permitAll()
+                .requestMatchers("/login/**").authenticated()
+
+                // Para desenvolvimento, liberar o resto:
+                .anyRequest().permitAll()
+            )
+            .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
 }
+

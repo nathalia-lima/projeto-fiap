@@ -1,5 +1,6 @@
 package com.fiap.java.restaurante.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.fiap.java.restaurante.DTO.UsuarioDTO;
 import com.fiap.java.restaurante.models.Usuario;
 import com.fiap.java.restaurante.service.UsuarioService;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuario")
+@Tag(name = "Usuario", description = "Operações para Usuarios")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
