@@ -4,9 +4,12 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
+import lombok.Getter;
+import lombok.Setter;
 import java.util.List;
 
+@Getter
+@Setter
 public class UsuarioDTO {
         @NotBlank
         private String nome;
@@ -21,22 +24,4 @@ public class UsuarioDTO {
         @NotNull
         private PerfilUsuario usuario;
 
-        public String getNome() {
-                return nome;
-        }
-        public String getEmail() {
-                return email;
-        }
-
-        public String getSenha() {
-                return senha;
-        }
-
-        public List<EnderecoDTO> getEndereco() {
-                return endereco;
-        }
-
-        public PerfilUsuario getUsuario() {
-                return usuario;
-        }
 }

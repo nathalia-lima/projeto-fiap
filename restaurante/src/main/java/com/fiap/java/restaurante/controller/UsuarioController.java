@@ -6,6 +6,10 @@ import com.fiap.java.restaurante.models.Usuario;
 import com.fiap.java.restaurante.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import com.fiap.java.restaurante.DTO.RespostaDTO;
+import org.springframework.http.HttpStatus;
+
 
 @RestController
 @RequestMapping("/usuario")
@@ -19,9 +23,8 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public String salvar(@RequestBody @Valid UsuarioDTO user) {
-        Usuario usuarioSalvo = usuarioService.salvar(user);
-        return "Usuário cadastrado com sucesso! ID: " + usuarioSalvo.getId();
+    public ResponseEntity<RespostaDTO> salvar(@RequestBody @Valid UsuarioDTO user) {
+        return ResponseEntity.CREATED().body(usuarioService.salvar(user));
     }
 
     @GetMapping("/login")
@@ -35,9 +38,9 @@ public class UsuarioController {
         return "Atualização feita com sucesso";
     }
 
-    @DeleteMapping
-    public String excluir(@PathVariable Long id, @Valid @RequestBody UsuarioDTO user) {
-        usuarioService.excluir(id, user);
+    @DeleteMapping("/{id}")
+    public String excluir(@PathVariable Long id) {
+        usuarioService.excluir(id);
         return "Exclusão feita com sucesso";
     }
 

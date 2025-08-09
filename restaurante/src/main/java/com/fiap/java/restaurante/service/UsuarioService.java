@@ -1,16 +1,21 @@
 package com.fiap.java.restaurante.service;
 
 import com.fiap.java.restaurante.DTO.EnderecoDTO;
+import com.fiap.java.restaurante.DTO.RespostaDTO;
 import com.fiap.java.restaurante.DTO.UsuarioDTO;
 import com.fiap.java.restaurante.models.Endereco;
 import com.fiap.java.restaurante.models.Usuario;
 import com.fiap.java.restaurante.repository.UsuarioRepository;
+import com.fiap.java.restaurante.service.mapper.RespostaMapper;
+
 import jakarta.validation.Valid;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,13 +24,14 @@ import java.util.stream.Collectors;
 public class UsuarioService implements UserDetailsService {
     private final UsuarioRepository usuarioRepository;
     private PasswordEncoder passwordEncoder;
+    private final RespostaMapper respostaMapper = new RespostaMapper();
 
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Usuario salvar(@Valid UsuarioDTO dto) {
+    public RespostaDTO salvar(@Valid UsuarioDTO dto) {
         Usuario usuario = new Usuario();
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
@@ -46,7 +52,8 @@ public class UsuarioService implements UserDetailsService {
         }).collect(Collectors.toList());
 
         usuario.setEndereco(enderecos);
-        return usuarioRepository.save(usuario);
+        usuarioRepository.save(usuario);
+        return respostaMapper.mapUsuarioCriadoToRespostaDTO(usuario);
     }
 
     public Usuario editar(Long id, @Valid UsuarioDTO dto) {
@@ -92,7 +99,7 @@ public class UsuarioService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
     }
 
-    public void excluir(Long id, @Valid UsuarioDTO dto) {
+    public void excluir(Long id) {
         Usuario usuarioExistente = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         usuarioRepository.delete(usuarioExistente);
