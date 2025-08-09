@@ -33,4 +33,10 @@ public class UsuarioController {
         return "Atualização feita com sucesso";
     }
 
+    @DeleteMapping
+    public String excluir(@PathVariable Long id, @Valid @RequestBody UsuarioDTO user) {
+        usuarioService.excluir(id, user);
+        return "Exclusão feita com sucesso";
+    }
+
 }

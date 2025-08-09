@@ -89,6 +89,12 @@ public class UsuarioService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return usuarioRepository.findByEmailIgnoreCase(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario nao encontrado"));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario não encontrado"));
+    }
+
+    public void excluir(Long id, @Valid UsuarioDTO dto) {
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        usuarioRepository.delete(usuarioExistente);
     }
 }
