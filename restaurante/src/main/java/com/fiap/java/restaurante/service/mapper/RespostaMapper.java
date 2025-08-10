@@ -30,6 +30,15 @@ public class RespostaMapper {
         respostaDTO.setMensagem("Senha atualizada com sucesso");
         return respostaDTO;
     }
+
+    public RespostaDTO mapUsuarioLoginToRespostaDTO(Usuario usuario) {
+        RespostaDTO respostaDTO = new RespostaDTO();
+        respostaDTO.setCodigo("200");
+        respostaDTO.setMensagem(String.format("Usuário de nome %s logado com sucesso", usuario.getNome()));
+
+        return respostaDTO;
+    }
+
     public Endereco mapEnderecoDTOToEndereco(EnderecoDTO enderecoDTO) {
         Endereco endereco = new Endereco();
         endereco.setCep(enderecoDTO.getCep());

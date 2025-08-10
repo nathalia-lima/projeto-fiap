@@ -1,11 +1,6 @@
 package com.fiap.java.restaurante.service;
 
-import com.fiap.java.restaurante.DTO.CriaUsuarioDTO;
-import com.fiap.java.restaurante.DTO.EditaDadosDTO;
-import com.fiap.java.restaurante.DTO.EnderecoDTO;
-import com.fiap.java.restaurante.DTO.RespostaDTO;
-import com.fiap.java.restaurante.DTO.TrocaSenhaDTO;
-import com.fiap.java.restaurante.DTO.UsuarioDTO;
+import com.fiap.java.restaurante.DTO.*;
 import com.fiap.java.restaurante.models.Endereco;
 import com.fiap.java.restaurante.models.Usuario;
 import com.fiap.java.restaurante.repository.UsuarioRepository;
@@ -16,6 +11,7 @@ import com.fiap.java.restaurante.exceptions.BadRequestException;
 import jakarta.validation.Valid;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -82,6 +78,16 @@ public class UsuarioService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Usuário não encontrado - ID: " + id));
         return respostaMapper.mapUsuarioToUsuarioDTO(usuario);
+    }
+
+    public RespostaDTO login(LoginDTO loginDTO) {
+        Optional<Usuario> optUsuario = usuarioRepository.findByEmailIgnoreCase(loginDTO.getEmail());
+
+        if(optUsuario.isEmpty() || !passwordEncoder.matches(loginDTO.getSenha(), optUsuario.get().getSenha())) {
+            throw new NotFoundException("Email e/ou senha inválidos");
+        }
+
+        return respostaMapper.mapUsuarioLoginToRespostaDTO(optUsuario.get());
     }
 
     @Override
