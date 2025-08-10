@@ -24,7 +24,7 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<RespostaDTO> salvar(@RequestBody @Valid UsuarioDTO user) {
-        return ResponseEntity.CREATED().body(usuarioService.salvar(user));
+        return ResponseEntity.status(201).body(usuarioService.salvar(user));
     }
 
     @GetMapping("/login")
