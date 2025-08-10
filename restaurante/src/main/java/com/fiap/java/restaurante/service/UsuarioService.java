@@ -1,5 +1,6 @@
 package com.fiap.java.restaurante.service;
 
+import com.fiap.java.restaurante.DTO.CriaUsuarioDTO;
 import com.fiap.java.restaurante.DTO.EditaDadosDTO;
 import com.fiap.java.restaurante.DTO.EnderecoDTO;
 import com.fiap.java.restaurante.DTO.RespostaDTO;
@@ -33,13 +34,17 @@ public class UsuarioService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UsuarioDTO salvar(@Valid UsuarioDTO dto) {
+    public UsuarioDTO salvar(@Valid CriaUsuarioDTO dto) {
         Usuario usuario = new Usuario();
         usuario.setNome(dto.getNome());
+        usuario.setCpf(dto.getCpf());
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
         usuario.setPerfilUsuario(dto.getUsuario());
-        usuario.setEndereco(respostaMapper.mapEnderecoDTOToEndereco(dto.getEndereco()));
+        Endereco endereco = respostaMapper.mapEnderecoDTOToEndereco(dto.getEndereco());
+        endereco.setUsuario(usuario);
+        usuario.setEndereco(endereco);
+        usuario.setDataAlteracao(LocalDateTime.now());
         usuarioRepository.save(usuario);
         return respostaMapper.mapUsuarioToUsuarioDTO(usuario);
     }

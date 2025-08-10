@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
+import com.fiap.java.restaurante.DTO.CriaUsuarioDTO;
 import com.fiap.java.restaurante.DTO.EditaDadosDTO;
 import com.fiap.java.restaurante.DTO.RespostaDTO;
 import com.fiap.java.restaurante.DTO.LoginDTO;
@@ -28,7 +29,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> salvar(@RequestBody @Valid UsuarioDTO user) {
+    public ResponseEntity<UsuarioDTO> salvar(@RequestBody @Valid CriaUsuarioDTO user) {
         return ResponseEntity.status(201).body(usuarioService.salvar(user));
     }
 

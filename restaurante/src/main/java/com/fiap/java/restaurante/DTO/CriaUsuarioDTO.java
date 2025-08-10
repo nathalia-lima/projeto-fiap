@@ -10,13 +10,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Pattern;
 
+@Valid
 @Getter
 @Setter
-@Valid
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UsuarioDTO {
-        private Long id;
+public class CriaUsuarioDTO {
         @NotBlank
         private String nome;
         @NotBlank
@@ -32,6 +31,5 @@ public class UsuarioDTO {
         private EnderecoDTO endereco;
         @NotNull
         private PerfilUsuario usuario;
-        private String dataAlteracao;
 
 }

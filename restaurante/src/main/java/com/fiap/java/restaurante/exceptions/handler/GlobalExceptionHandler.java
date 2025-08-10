@@ -9,8 +9,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fiap.java.restaurante.exceptions.NotFoundException;
 import com.fiap.java.restaurante.exceptions.BadRequestException;
 import com.fiap.java.restaurante.DTO.RespostaDTO;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)

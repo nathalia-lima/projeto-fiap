@@ -26,8 +26,8 @@ public class Endereco {
 
     private String estado;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @OneToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
 
     
