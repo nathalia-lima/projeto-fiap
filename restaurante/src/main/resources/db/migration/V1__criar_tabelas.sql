@@ -7,10 +7,12 @@ DROP TABLE IF EXISTS usuario;
 CREATE TABLE usuario (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     data_alteracao TIMESTAMP,
     perfil_usuario VARCHAR NOT NULL
+    ativo BOOLEAN NOT NULL DEFAULT TRUE,
 );
 
 -- Cria a tabela endereco
