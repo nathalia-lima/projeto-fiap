@@ -16,14 +16,14 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Cria a imagem final
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-alpine-3.22
 
 WORKDIR /app
 
 # Copia o jar gerado no stage de build
 COPY --from=build /app/target/*.jar app.jar
 
-RUN adduser app_user \
+RUN adduser -D app_user \
     && chown -R app_user:app_user /app \
     && chmod 500 app.jar
 
