@@ -3,6 +3,7 @@ package com.fiap.java.restaurante.exceptions.handler;
 import com.fiap.java.restaurante.DTO.ValidacaoRespostasDto;
 import com.fiap.java.restaurante.exceptions.BadRequestException;
 import com.fiap.java.restaurante.exceptions.NotFoundException;
+import com.fiap.java.restaurante.exceptions.UnauthorizedException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,4 +34,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(400).body(new ValidacaoRespostasDto(erros, 400));
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<RespostaDTO> handleUnauthorizedException(UnauthorizedException ex, WebRequest request) {
+        return ResponseEntity.status(401).body(new RespostaDTO("401", ex.getReason()));
+    }
 }

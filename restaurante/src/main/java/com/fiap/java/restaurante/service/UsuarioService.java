@@ -1,6 +1,7 @@
 package com.fiap.java.restaurante.service;
 
 import com.fiap.java.restaurante.DTO.*;
+import com.fiap.java.restaurante.exceptions.UnauthorizedException;
 import com.fiap.java.restaurante.models.Endereco;
 import com.fiap.java.restaurante.models.Usuario;
 import com.fiap.java.restaurante.repository.UsuarioRepository;
@@ -84,7 +85,7 @@ public class UsuarioService implements UserDetailsService {
         Optional<Usuario> optUsuario = usuarioRepository.findByEmailIgnoreCase(loginDTO.getEmail());
 
         if(optUsuario.isEmpty() || !passwordEncoder.matches(loginDTO.getSenha(), optUsuario.get().getSenha())) {
-            throw new NotFoundException("Email e/ou senha inválidos");
+            throw new UnauthorizedException("Login e/ou senha inválidos");
         }
 
         return respostaMapper.mapUsuarioLoginToRespostaDTO(optUsuario.get());
