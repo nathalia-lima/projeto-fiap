@@ -34,8 +34,8 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody @Valid LoginDTO login ) {
-        return "Área protegida!";
+    public ResponseEntity<RespostaDTO> login(@RequestBody @Valid LoginDTO login ) {
+        return ResponseEntity.status(200).body(usuarioService.login(login));
     }
 
     @PatchMapping("/editar/dados/{id}")
