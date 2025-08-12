@@ -17,9 +17,11 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<RespostaDTO> handleNotFoundException(NotFoundException ex, WebRequest request) {
+    public ResponseEntity<RespostaDTO> handleNotFoundException(NotFoundException ex) {
         return ResponseEntity.status(404).body(new RespostaDTO("404", ex.getMessage()));
     }
+
+    
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<RespostaDTO> handleBadRequestException(BadRequestException ex, WebRequest request) {
