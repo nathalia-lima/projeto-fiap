@@ -1,6 +1,5 @@
 package com.fiap.java.restaurante.exceptions.handler;
 
-import com.fiap.java.restaurante.DTO.ValidacaoRespostasDto;
 import com.fiap.java.restaurante.exceptions.BadRequestException;
 import com.fiap.java.restaurante.exceptions.NotFoundException;
 import com.fiap.java.restaurante.exceptions.UnauthorizedException;
@@ -29,11 +28,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ValidacaoRespostasDto> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, WebRequest request) {
+    public ResponseEntity<RespostaDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, WebRequest request) {
         List<String> erros = ex.getBindingResult().getFieldErrors().stream().map(fieldError ->
                 String.format("%s : %s", fieldError.getField(), fieldError.getDefaultMessage())).toList();
 
-        return ResponseEntity.status(400).body(new ValidacaoRespostasDto(erros, 400));
+        return ResponseEntity.status(400).body("400", erros);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
