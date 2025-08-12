@@ -54,7 +54,7 @@ public interface UsuarioControllerDocumentation {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = RespostaDTO.class),
                             examples = @ExampleObject(
-                                    value = "{ \"mensagem\": \"Usuário não encontrado\", \"status\": \"404\" }"
+                                    value = "{ \"mensagem\": \"Usuário não encontrado - ID: 1\", \"status\": \"404\" }"
                             )
                     )
             ),
@@ -76,7 +76,7 @@ public interface UsuarioControllerDocumentation {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = RespostaDTO.class),
                             examples = @ExampleObject(
-                                    value = "{ \"mensagem\": \"Usuário não encontrado\", \"status\": \"404\" }"
+                                    value = "{ \"mensagem\": \"Usuário não encontrado - ID: 1\", \"status\": \"404\" }"
                             )
                     )
             ),
@@ -107,7 +107,7 @@ public interface UsuarioControllerDocumentation {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = RespostaDTO.class),
                             examples = @ExampleObject(
-                                    value = "{ \"mensagem\": \"Usuário não encontrado\", \"status\": \"404\" }"
+                                    value = "{ \"mensagem\": \"Usuário não encontrado - ID: 1\", \"status\": \"404\" }"
                             )
                     )
             )
@@ -120,7 +120,7 @@ public interface UsuarioControllerDocumentation {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = RespostaDTO.class),
                             examples = @ExampleObject(
-                                    value = "{ \"mensagem\": \"Usuário não encontrado\", \"status\": \"404\" }"
+                                    value = "{ \"mensagem\": \"Usuário não encontrado - ID: 1\", \"status\": \"404\" }"
                             )
                     )
             )
