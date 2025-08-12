@@ -16,17 +16,20 @@ public class RespostaMapper {
         usuarioDTO.setCpf(usuario.getCpf());
         usuarioDTO.setEndereco(mapEnderecoToEnderecoDTO(usuario.getEndereco()));
         usuarioDTO.setUsuario(usuario.getPerfilUsuario());
+        usuarioDTO.setDataAlteracao(usuario.getDataAlteracao());
         return usuarioDTO;
     }
 
     public RespostaDTO mapUsuarioAtualizadoToRespostaDTO(Usuario usuario) {
         RespostaDTO respostaDTO = new RespostaDTO();
+        respostaDTO.setCodigo("200");
         respostaDTO.setMensagem("Usuário atualizado com sucesso");
         return respostaDTO;
     }
 
     public RespostaDTO mapSenhaAtualizadaToRespostaDTO(Long id) {
         RespostaDTO respostaDTO = new RespostaDTO();
+        respostaDTO.setCodigo("200");
         respostaDTO.setMensagem("Senha atualizada com sucesso");
         return respostaDTO;
     }
