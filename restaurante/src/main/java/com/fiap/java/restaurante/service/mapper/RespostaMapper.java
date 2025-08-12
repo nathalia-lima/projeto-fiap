@@ -1,5 +1,7 @@
 package com.fiap.java.restaurante.service.mapper;
 
+import java.util.Optional;
+
 import com.fiap.java.restaurante.DTO.EnderecoDTO;
 import com.fiap.java.restaurante.DTO.RespostaDTO;
 import com.fiap.java.restaurante.DTO.UsuarioDTO;
@@ -67,15 +69,18 @@ public class RespostaMapper {
     }
 
     public Endereco mapEditaDadosEnderecoDTOToEndereco(EnderecoDTO enderecoDTO, Endereco enderecoExistente) {
-        var OptionalEnderecoDTO = Optional.ofNullable(enderecoDTO);
+       
         Endereco enderecoAtualizado = new Endereco();
-        enderecoAtualizado.setCep(OptionalEnderecoDTO.map(EnderecoDTO::getCep).orElse(enderecoExistente.getCep()));
-        enderecoAtualizado.setRua(OptionalEnderecoDTO.map(EnderecoDTO::getRua).orElse(enderecoExistente.getRua()));
-        enderecoAtualizado.setNumero(OptionalEnderecoDTO.map(EnderecoDTO::getNumero).orElse(enderecoExistente.getNumero()));
-        enderecoAtualizado.setComplemento(OptionalEnderecoDTO.map(EnderecoDTO::getComplemento).orElse(enderecoExistente.getComplemento()));
-        enderecoAtualizado.setBairro(OptionalEnderecoDTO.map(EnderecoDTO::getBairro).orElse(enderecoExistente.getBairro()));
-        enderecoAtualizado.setCidade(OptionalEnderecoDTO.map(EnderecoDTO::getCidade).orElse(enderecoExistente.getCidade()));
-        enderecoAtualizado.setEstado(OptionalEnderecoDTO.map(EnderecoDTO::getEstado).orElse(enderecoExistente.getEstado()));   
+
+
+
+        enderecoAtualizado.setCep(Optional.ofNullable(enderecoDTO.getCep()).orElse(enderecoExistente.getCep()));
+        enderecoAtualizado.setRua(Optional.ofNullable(enderecoDTO.getRua()).orElse(enderecoExistente.getRua()));
+        enderecoAtualizado.setNumero(Optional.ofNullable(enderecoDTO.getNumero()).orElse(enderecoExistente.getNumero()));
+        enderecoAtualizado.setComplemento(Optional.ofNullable(enderecoDTO.getComplemento()).orElse(enderecoExistente.getComplemento()));
+        enderecoAtualizado.setBairro(Optional.ofNullable(enderecoDTO.getBairro()).orElse(enderecoExistente.getBairro()));
+        enderecoAtualizado.setCidade(Optional.ofNullable(enderecoDTO.getCidade()).orElse(enderecoExistente.getCidade()));
+        enderecoAtualizado.setEstado(Optional.ofNullable(enderecoDTO.getEstado()).orElse(enderecoExistente.getEstado()));   
         return enderecoAtualizado;
     }
 }

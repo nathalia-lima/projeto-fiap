@@ -62,8 +62,9 @@ public class UsuarioService implements UserDetailsService {
         }else {
             usuario.setEmail(usuario.getEmail());
         }
+        
         if (dto.getEndereco() != null) {
-            Endereco endereco = respostaMapper.mapEditaDadosEnderecoDTOToEndereco(dto.getEndereco());
+            Endereco endereco = respostaMapper.mapEditaDadosEnderecoDTOToEndereco(dto.getEndereco(), usuario.getEndereco());
             endereco.setUsuario(usuario);
             usuario.setEndereco(endereco);
         }else {
