@@ -6,8 +6,10 @@ import com.fiap.java.restaurante.models.Endereco;
 import com.fiap.java.restaurante.models.Usuario;
 import com.fiap.java.restaurante.repository.UsuarioRepository;
 import com.fiap.java.restaurante.service.mapper.RespostaMapper;
-import com.fiap.java.restaurante.exceptions.NotFoundException;
 import com.fiap.java.restaurante.exceptions.BadRequestException;
+import com.fiap.java.restaurante.exceptions.NotFoundException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
 
 import jakarta.validation.Valid;
 
@@ -42,14 +44,31 @@ public class UsuarioService implements UserDetailsService {
         endereco.setUsuario(usuario);
         usuario.setEndereco(endereco);
         usuario.setDataAlteracao(LocalDateTime.now());
-        usuarioRepository.save(usuario);
+        usuarioRepository.save(usuario);                              
         return respostaMapper.mapUsuarioToUsuarioDTO(usuario);
     }
 
     public RespostaDTO editarDados(Long id, @Valid EditaDadosDTO dto) {
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado - ID: " + id));
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new NotFoundException("Usuário não encontrado - ID: " + id));
+
+        //Campos sem alteração
+        usuario.setNome(usuario.getNome());
+        usuario.setCpf(usuario.getCpf());
+        usuario.setSenha(usuario.getSenha());
+
+        //Campos com possível alteração
+        if (dto.getEmail() != null) {
         usuario.setEmail(dto.getEmail());
-        usuario.setEndereco(respostaMapper.mapEnderecoDTOToEndereco(dto.getEndereco()));
+        }else {
+            usuario.setEmail(usuario.getEmail());
+        }
+        if (dto.getEndereco() != null) {
+            Endereco endereco = respostaMapper.mapEnderecoDTOToEndereco(dto.getEndereco());
+            endereco.setUsuario(usuario);
+            usuario.setEndereco(endereco);
+        }else {
+            usuario.setEndereco(usuario.getEndereco());
+        }
         usuario.setDataAlteracao(LocalDateTime.now());
         usuarioRepository.save(usuario);
         return respostaMapper.mapUsuarioAtualizadoToRespostaDTO(usuario);
@@ -57,13 +76,24 @@ public class UsuarioService implements UserDetailsService {
 
     public RespostaDTO trocarSenha(Long id, @Valid TrocaSenhaDTO dto) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new NotFoundException("Usuário não encontrado - ID: " + id));
+
+        // Campo de senha a ser alterado
         if (!passwordEncoder.matches(dto.getSenhaAtual(), usuario.getSenha())) {
             throw new BadRequestException("Senha atual incorreta");
         }
+
         if (!dto.getNovaSenha().equals(dto.getConfirmaNovaSenha())) {
             throw new BadRequestException("Nova senha e confirmação não coincidem");
         }
+        
         usuario.setSenha(passwordEncoder.encode(dto.getNovaSenha()));
+
+        // Campos sem alteração
+        usuario.setNome(usuario.getNome());
+        usuario.setCpf(usuario.getCpf());
+        usuario.setEmail(usuario.getEmail());
+        usuario.setEndereco(usuario.getEndereco());
+        
         usuario.setDataAlteracao(LocalDateTime.now());
         usuarioRepository.save(usuario);
         return respostaMapper.mapSenhaAtualizadaToRespostaDTO(id);
