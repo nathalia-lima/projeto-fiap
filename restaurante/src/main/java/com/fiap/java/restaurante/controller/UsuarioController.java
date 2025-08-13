@@ -1,6 +1,6 @@
 package com.fiap.java.restaurante.controller;
 
-import com.fiap.java.restaurante.documentation.UsuarioControllerDocumentation;
+import com.fiap.java.restaurante.controller.UsuarioControllerAPI;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.fiap.java.restaurante.DTO.UsuarioDTO;
 import com.fiap.java.restaurante.models.Usuario;
@@ -21,7 +21,7 @@ import org.springframework.http.HttpStatus;
 @RestController
 @RequestMapping("/usuario")
 @Tag(name = "Usuario", description = "Operações para Usuarios")
-public class UsuarioController implements UsuarioControllerDocumentation {
+public class UsuarioController implements UsuarioControllerAPI {
 
     private final UsuarioService usuarioService;
 
@@ -30,8 +30,8 @@ public class UsuarioController implements UsuarioControllerDocumentation {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> salvar(@RequestBody @Valid CriaUsuarioDTO criaUsuarioDTO) {
-        return ResponseEntity.status(201).body(usuarioService.salvar(criaUsuarioDTO));
+    public ResponseEntity<UsuarioDTO> salvar(@RequestBody @Valid CriaUsuarioDTO user) {
+        return ResponseEntity.status(201).body(usuarioService.salvar(user));
     }
 
     @PostMapping("/login")
@@ -40,29 +40,24 @@ public class UsuarioController implements UsuarioControllerDocumentation {
     }
 
     @PatchMapping("/editar/dados/{id}")
-    public ResponseEntity<RespostaDTO> editarDados(@RequestHeader String authorization, @PathVariable Long id, @Valid @RequestBody EditaDadosDTO editaDadosDTO) {
-        return ResponseEntity.status(200).body(usuarioService.editarDados(id, editaDadosDTO, authorization));
+    public ResponseEntity<RespostaDTO> editarDados(@PathVariable Long id, @Valid @RequestBody EditaDadosDTO user) {
+        return ResponseEntity.status(200).body(usuarioService.editarDados(id, user));
     }
 
     @PatchMapping("/trocar/senha/{id}")
-    public ResponseEntity<RespostaDTO> trocarSenha(@RequestHeader String authorization, @PathVariable Long id, @Valid @RequestBody TrocaSenhaDTO trocaSenhaDTO) {
-        return ResponseEntity.status(200).body(usuarioService.trocarSenha(id, trocaSenhaDTO, authorization));
+    public ResponseEntity<RespostaDTO> trocarSenha(@PathVariable Long id, @Valid @RequestBody TrocaSenhaDTO user) {
+        return ResponseEntity.status(200).body(usuarioService.trocarSenha(id, user));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(@RequestHeader String authorization, @PathVariable Long id) {
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
         usuarioService.excluir(id);
         return ResponseEntity.status(204).build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable Long id, @RequestHeader String authorization) {
-        return ResponseEntity.status(200).body(usuarioService.buscarPorId(id, authorization));
-    }
-
-    @GetMapping("/todos")
-    public ResponseEntity<Iterable<UsuarioDTO>> buscarTodos(@RequestHeader String authorization) {
-        return ResponseEntity.status(200).body(usuarioService.buscarTodos(authorization));
+    public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.status(200).body(usuarioService.buscarPorId(id));
     }
 
 }
