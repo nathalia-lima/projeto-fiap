@@ -36,10 +36,10 @@ public class RespostaMapper {
         return respostaDTO;
     }
 
-    public RespostaDTO mapUsuarioLoginToRespostaDTO(Usuario usuario) {
+    public RespostaDTO mapUsuarioLoginToRespostaDTO(Usuario usuario, String token) {
         RespostaDTO respostaDTO = new RespostaDTO();
         respostaDTO.setCodigo("200");
-        respostaDTO.setMensagem(String.format("Usuário de nome %s logado com sucesso", usuario.getNome()));
+        respostaDTO.setMensagem(String.format("Usuário de nome %s logado com sucesso", usuario.getNome() + "\nToken de acesso: %s", token));
 
         return respostaDTO;
     }
@@ -82,5 +82,35 @@ public class RespostaMapper {
         enderecoAtualizado.setCidade(Optional.ofNullable(enderecoDTO.getCidade()).orElse(enderecoExistente.getCidade()));
         enderecoAtualizado.setEstado(Optional.ofNullable(enderecoDTO.getEstado()).orElse(enderecoExistente.getEstado()));   
         return enderecoAtualizado;
+    }
+
+    public List<UsuarioDTO> mapUsuariosToUsuarioDTOs(List<Usuario> usuarios) {
+        return usuarios.stream()
+                .map(this::mapUsuarioToUsuarioDTO)
+                .toList();
+    }
+
+    public mapEditaUsuario() {
+        //Campos sem alteração
+        usuario.setNome(usuario.getNome());
+        usuario.setCpf(usuario.getCpf());
+        usuario.setSenha(usuario.getSenha());
+
+        //Campos com possível alteração
+        if (dto.getEmail() != null) {
+        usuario.setEmail(dto.getEmail());
+        }else {
+            usuario.setEmail(usuario.getEmail());
+        }
+        
+        if (dto.getEndereco() != null) {
+            Endereco endereco = respostaMapper.mapEditaDadosEnderecoDTOToEndereco(dto.getEndereco(), usuario.getEndereco());
+            endereco.setUsuario(usuario);
+            usuario.setEndereco(endereco);
+        }else {
+            usuario.setEndereco(usuario.getEndereco());
+        }
+        usuario.setDataAlteracao(LocalDateTime.now());
+        usuarioRepository.save(usuario);
     }
 }
