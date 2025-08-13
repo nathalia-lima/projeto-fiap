@@ -1,12 +1,19 @@
 package com.fiap.java.restaurante.service.mapper;
 
 import java.util.Optional;
+import java.util.List;
+import java.time.LocalDateTime;
 
 import com.fiap.java.restaurante.DTO.EnderecoDTO;
 import com.fiap.java.restaurante.DTO.RespostaDTO;
 import com.fiap.java.restaurante.DTO.UsuarioDTO;
 import com.fiap.java.restaurante.models.Endereco;
 import com.fiap.java.restaurante.models.Usuario;
+import com.fiap.java.restaurante.DTO.CriaUsuarioDTO;
+import com.fiap.java.restaurante.DTO.EditaDadosDTO;
+import com.fiap.java.restaurante.DTO.TrocaSenhaDTO;
+import com.fiap.java.restaurante.DTO.LoginDTO;
+
 
 public class RespostaMapper {
 
@@ -90,7 +97,7 @@ public class RespostaMapper {
                 .toList();
     }
 
-    public mapEditaUsuario() {
+    public void mapEditaUsuario(Usuario usuario, EditaDadosDTO dto) {
         //Campos sem alteração
         usuario.setNome(usuario.getNome());
         usuario.setCpf(usuario.getCpf());
@@ -104,13 +111,12 @@ public class RespostaMapper {
         }
         
         if (dto.getEndereco() != null) {
-            Endereco endereco = respostaMapper.mapEditaDadosEnderecoDTOToEndereco(dto.getEndereco(), usuario.getEndereco());
+            Endereco endereco = mapEditaDadosEnderecoDTOToEndereco(dto.getEndereco(), usuario.getEndereco());
             endereco.setUsuario(usuario);
             usuario.setEndereco(endereco);
         }else {
             usuario.setEndereco(usuario.getEndereco());
         }
         usuario.setDataAlteracao(LocalDateTime.now());
-        usuarioRepository.save(usuario);
     }
 }

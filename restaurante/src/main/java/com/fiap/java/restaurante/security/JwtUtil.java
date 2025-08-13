@@ -12,7 +12,7 @@ public class JwtUtil {
     private static final String SECRET_KEY = "o6paeLufEr3uXd4RQSBKXwrDUaUEtfoLJ3d6CPV4YJJsZSESlHu2T2HGRzoCLYi5";
     private static final long EXPIRATION_TIME = 3600000; 
 
-    public static String generateToken(String username, String perfilUsuario) {
+    public  String generateToken(String username, String perfilUsuario) {
         return Jwts.builder()
             .setSubject(username)
             .claim("role", perfilUsuario) 
@@ -24,17 +24,16 @@ public class JwtUtil {
             .compact();
     }
 
-    public static boolean validateToken(String token, String username) {
-        String tokenUsername = getUsername(token);
+    public boolean validateToken(String token, String username) {
         String tokenIssuer = Jwts.parser()
             .setSigningKey(SECRET_KEY)
             .parseClaimsJws(token)
             .getBody()
             .getIssuer();
-        return (tokenUsername.equals(username) && !isTokenExpired(token) && tokenIssuer.equals("Restaurante API"));
+        return (!isTokenExpired(token) && tokenIssuer.equals("Restaurante API"));
     }
 
-    public static String getRole(String token) {
+    public String getRole(String token) {
         Claims claims = Jwts.parser()
             .setSigningKey(SECRET_KEY)
             .parseClaimsJws(token)
@@ -43,7 +42,7 @@ public class JwtUtil {
     }
     
 
-    public static String getUsername(String token) {
+    public String getUsername(String token) {
         Claims claims = Jwts.parser()
             .setSigningKey(SECRET_KEY)
             .parseClaimsJws(token)
@@ -51,7 +50,7 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
-    public static boolean isTokenExpired(String token) {
+    public  boolean isTokenExpired(String token) {
         Claims claims = Jwts.parser()
             .setSigningKey(SECRET_KEY)
             .parseClaimsJws(token)

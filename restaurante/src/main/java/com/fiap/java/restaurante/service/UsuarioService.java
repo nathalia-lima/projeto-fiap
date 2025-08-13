@@ -29,13 +29,9 @@ import com.fiap.java.restaurante.security.JwtUtil;
 public class UsuarioService implements UserDetailsService {
     private final UsuarioRepository usuarioRepository;
     private PasswordEncoder passwordEncoder;
-    private final RespostaMapper respostaMapper = new RespostaMapper();
+    private final RespostaMapper respostaMapper;
     private final JwtUtil jwtUtil;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
-        this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public UsuarioDTO salvar(@Valid CriaUsuarioDTO dto, String authorization) {
         Usuario usuario = new Usuario();
@@ -53,15 +49,18 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public RespostaDTO editarDados(Long id, @Valid EditaDadosDTO dto, String authorization) {
-
-        if (!jwtUtil.isTokenValid(authorization)) {
+        if (!jwtUtil.validateToken(authorization)) {
             throw new UnauthorizedException("Token inválido ou expirado");
         }
+        
 
          Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new NotFoundException("Usuário não encontrado - ID: " + id));
 
-        if (jwtUtil.getRole().equals("CLIENTE") && usuario.getEmail().equals(jwtUtil.getUsername()) || jwtUtil.getRole().equals("RESTAURANTE")) {
-            respostaMapper.mapEditaUsuario();
+         
+
+        if (jwtUtil.getRole(authorization).equals("CLIENTE") && usuario.getEmail().equals(jwtUtil.getUsername(authorization)) || jwtUtil.getRole(authorization).equals("RESTAURANTE")) {
+            respostaMapper.mapEditaUsuario(usuario, dto);
+             usuarioRepository.save(usuario);
         } else {
             throw new UnauthorizedException("Usuário não autorizado a editar este perfil");
         }
@@ -70,12 +69,13 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public RespostaDTO trocarSenha(Long id, @Valid TrocaSenhaDTO dto, String authorization) {
-
-        if (!jwtUtil.isTokenValid(authorization)) {
+        if (!jwtUtil.validateToken(authorization)) {
             throw new UnauthorizedException("Token inválido ou expirado");
         }
 
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new NotFoundException("Usuário não encontrado - ID: " + id));
+
+        
 
         // Campo de senha a ser alterado
         if (!passwordEncoder.matches(dto.getSenhaAtual(), usuario.getSenha())) {
@@ -100,13 +100,13 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public void excluir(Long id, String authorization) {
-         if (!jwtUtil.isTokenValid(authorization)) {
+         if (!jwtUtil.validateToken(authorization)) {
             throw new UnauthorizedException("Token inválido ou expirado");
         }
             Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Usuário não encontrado"));
         
-        if (jwtUtil.getRole().equals("CLIENTE") && usuario.getEmail().equals(jwtUtil.getUsername()) || jwtUtil.getRole().equals("RESTAURANTE")) {
+        if (jwtUtil.getRole(authorization).equals("CLIENTE") && usuario.getEmail().equals(jwtUtil.getUsername(authorization)) || jwtUtil.getRole(authorization).equals("RESTAURANTE")) {
             usuarioRepository.delete(usuario);
         } else {
             throw new UnauthorizedException("Usuário não autorizado a editar este perfil");
@@ -114,33 +114,32 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public UsuarioDTO buscarPorId(Long id, String authorization) {
-         if (!jwtUtil.isTokenValid(authorization)) {
+         if (!jwtUtil.validateToken(authorization)) {
             throw new UnauthorizedException("Token inválido ou expirado");
         }
 
-         if (jwtUtil.getRole().equals("CLIENTE") && usuario.getEmail().equals(jwtUtil.getUsername()) ||jwtUtil.getRole().equals("RESTAURANTE")) {
+         if (jwtUtil.getRole(authorization).equals("CLIENTE") && usuario.getEmail().equals(getUsername(authorization)) || jwtUtil.getRole(authorization).equals("RESTAURANTE")) {
             Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Usuário não encontrado - ID: " + id));
+                 return respostaMapper.mapUsuarioToUsuarioDTO(usuario);
         } else {
             throw new UnauthorizedException("Usuário não autorizado a editar este perfil");
         }
 
         
-        return respostaMapper.mapUsuarioToUsuarioDTO(usuario);
+       
     }
 
-    public List<UsuarioDTO> buscarTodos() {
-        if (!jwtUtil.isTokenValid(authorization)) {
+    public List<UsuarioDTO> buscarTodos(String authorization) {
+        if (!jwtUtil.validateToken(authorization)) {
             throw new UnauthorizedException("Token inválido ou expirado");
         }
-        if (!jwtUtil.getRole().equals("RESTAURANTE")) {
+        if (!jwtUtil.getRole(authorization).equals("RESTAURANTE")) {
              List<Usuario> usuarios = usuarioRepository.findAll();
+             return respostaMapper.mapUsuariosToUsuarioDTOs(usuarios);
           }  else{
             throw new UnauthorizedException("Usuário não autorizado a editar este perfil");
         }
-
-       
-        return respostaMapper.mapUsuariosToUsuarioDTOs(usuarios);
     }
 
     public RespostaDTO login(LoginDTO loginDTO) {
@@ -152,7 +151,7 @@ public class UsuarioService implements UserDetailsService {
             throw new UnauthorizedException("Login e/ou senha inválidos");
         }
 
-        String token = jwtUtil.generateToken(optUsuario.get().getEmail(), optUsuario.get().getPerfilUsuario());
+        String token = jwtUtil.generateToken(optUsuario.get().getEmail(), optUsuario.get().getPerfilUsuario().toString());
 
         return respostaMapper.mapUsuarioLoginToRespostaDTO(optUsuario.get(), token);
     }
