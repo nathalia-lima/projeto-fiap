@@ -60,12 +60,26 @@ public class UsuarioService implements UserDetailsService {
 
          Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new NotFoundException("Usuário não encontrado - ID: " + id));
 
-        if (jwtUtil.getRole().equals("CLIENTE") && usuario.getEmail().equals(jwtUtil.getUsername()) || jwtUtil.getRole().equals("RESTAURANTE")) {
-            respostaMapper.mapEditaUsuario();
-        } else {
-            throw new UnauthorizedException("Usuário não autorizado a editar este perfil");
-        }
+        //Campos sem alteração
+        usuario.setNome(usuario.getNome());
+        usuario.setCpf(usuario.getCpf());
+        usuario.setSenha(usuario.getSenha());
 
+        //Campos com possível alteração
+        if (dto.getEmail() != null) {
+        usuario.setEmail(dto.getEmail());
+        }else {
+            usuario.setEmail(usuario.getEmail());
+        }
+        if (dto.getEndereco() != null) {
+            Endereco endereco = respostaMapper.mapEditaDadosEnderecoDTOToEndereco(dto.getEndereco());
+            endereco.setUsuario(usuario);
+            usuario.setEndereco(endereco);
+        }else {
+            usuario.setEndereco(usuario.getEndereco());
+        }
+        usuario.setDataAlteracao(LocalDateTime.now());
+        usuarioRepository.save(usuario);
         return respostaMapper.mapUsuarioAtualizadoToRespostaDTO(usuario);
     }
 
