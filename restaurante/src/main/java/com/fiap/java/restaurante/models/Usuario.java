@@ -34,6 +34,10 @@ public class Usuario implements UserDetails {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Endereco endereco;
 
+    @OneToOne
+    @JoinColumn(name = "restaurante", referencedColumnName = "id")
+    private Restaurante restaurante;
+
     @Enumerated(EnumType.STRING)
     private PerfilUsuario perfilUsuario;
 

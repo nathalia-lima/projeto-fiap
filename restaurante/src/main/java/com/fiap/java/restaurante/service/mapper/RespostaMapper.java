@@ -2,10 +2,10 @@ package com.fiap.java.restaurante.service.mapper;
 
 import java.util.Optional;
 
-import com.fiap.java.restaurante.DTO.EnderecoDTO;
-import com.fiap.java.restaurante.DTO.RespostaDTO;
-import com.fiap.java.restaurante.DTO.UsuarioDTO;
+import com.fiap.java.restaurante.DTO.*;
 import com.fiap.java.restaurante.models.Endereco;
+import com.fiap.java.restaurante.models.ItemCardapio;
+import com.fiap.java.restaurante.models.Restaurante;
 import com.fiap.java.restaurante.models.Usuario;
 
 public class RespostaMapper {
@@ -82,5 +82,39 @@ public class RespostaMapper {
         enderecoAtualizado.setCidade(Optional.ofNullable(enderecoDTO.getCidade()).orElse(enderecoExistente.getCidade()));
         enderecoAtualizado.setEstado(Optional.ofNullable(enderecoDTO.getEstado()).orElse(enderecoExistente.getEstado()));   
         return enderecoAtualizado;
+    }
+
+    public RestauranteDTO mapRestauranteToRestauranteDTO(Restaurante restaurante) {
+        RestauranteDTO restauranteDTO = new RestauranteDTO();
+        restauranteDTO.setId(restaurante.getId());
+        restauranteDTO.setNome(restaurante.getNome());
+        restauranteDTO.setTipoCozinha(restaurante.getTipoCozinha());
+        restauranteDTO.setHorarioFuncionamento(restaurante.getHorarioFuncionamento());
+        restauranteDTO.setEndereco(mapEnderecoToEnderecoDTO(restaurante.getEndereco()));
+        return restauranteDTO;
+    }
+
+    public RespostaDTO mapRestauranteAtualizadoToRespostaDTO(Long id) {
+        RespostaDTO respostaDTO = new RespostaDTO();
+        respostaDTO.setCodigo("200");
+        respostaDTO.setMensagem("Restaurante atualizado com sucesso");
+        return respostaDTO;
+    }
+
+    public ItemCardapioDTO mapItemCardapioToItemCardapioDTO(ItemCardapio itemCardapio) {
+        ItemCardapioDTO itemCardapioDTO = new ItemCardapioDTO();
+        itemCardapioDTO.setId(itemCardapio.getId());
+        itemCardapioDTO.setNome(itemCardapio.getNome());
+        itemCardapioDTO.setDescricao(itemCardapio.getDescricao());
+        itemCardapioDTO.setPreco(itemCardapio.getPreco());
+        itemCardapioDTO.setDisponivel(itemCardapio.isDisponivel());
+        return itemCardapioDTO;
+    }
+
+    public RespostaDTO mapItemCardapioAtualizadoToRespostaDTO(Long id) {
+        RespostaDTO respostaDTO = new RespostaDTO();
+        respostaDTO.setCodigo("200");
+        respostaDTO.setMensagem("Item do cardápio atualizado com sucesso");
+        return respostaDTO;
     }
 }

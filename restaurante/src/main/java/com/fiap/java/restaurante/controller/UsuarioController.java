@@ -1,9 +1,8 @@
 package com.fiap.java.restaurante.controller;
 
-import com.fiap.java.restaurante.controller.UsuarioControllerAPI;
+import com.fiap.java.restaurante.controller.api.UsuarioControllerAPI;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.fiap.java.restaurante.DTO.UsuarioDTO;
-import com.fiap.java.restaurante.models.Usuario;
 import com.fiap.java.restaurante.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +13,6 @@ import com.fiap.java.restaurante.DTO.EditaDadosDTO;
 import com.fiap.java.restaurante.DTO.RespostaDTO;
 import com.fiap.java.restaurante.DTO.LoginDTO;
 import com.fiap.java.restaurante.DTO.TrocaSenhaDTO;
-
-import org.springframework.http.HttpStatus;
 
 
 @RestController

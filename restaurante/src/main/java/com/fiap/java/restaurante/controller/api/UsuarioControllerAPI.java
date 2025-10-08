@@ -1,4 +1,4 @@
-package com.fiap.java.restaurante.controller;
+package com.fiap.java.restaurante.controller.api;
 
 import com.fiap.java.restaurante.DTO.*;
 import io.swagger.v3.oas.annotations.Operation;

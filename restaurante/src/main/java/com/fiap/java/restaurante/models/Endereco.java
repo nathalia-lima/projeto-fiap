@@ -30,5 +30,7 @@ public class Endereco {
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
 
+    @OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Restaurante restaurante;
     
 }
