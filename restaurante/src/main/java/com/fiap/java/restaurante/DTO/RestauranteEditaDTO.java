@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalTime;
+
 @Getter
 @Setter
 @Valid
@@ -18,5 +20,5 @@ public class RestauranteEditaDTO {
     private EnderecoDTO endereco;
     private String tipoCozinha;
     @Pattern(regexp = "^([01]\\d|2[0-3]):[0-5]\\d-([01]\\d|2[0-3]):[0-5]\\d$", message = "O campo Horário de funcionamento deve estar no formato HH:mm-HH:mm (Exemplo: 08:00-18:00)")
-    private String horarioFuncionamento;
+    private LocalTime horarioFuncionamento;
 }

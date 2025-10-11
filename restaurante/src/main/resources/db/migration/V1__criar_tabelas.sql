@@ -1,22 +1,5 @@
--- Cria o tipo ENUM para o perfil do usuário
-CREATE TYPE perfil_usuario AS ENUM ('CLIENTE', 'RESTAURANTE');
-
--- Cria a tabela usuario
-DROP TABLE IF EXISTS usuario;
-CREATE TABLE usuario (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(100),
-    cpf VARCHAR(14) UNIQUE,
-    email VARCHAR(100) UNIQUE,
-    senha VARCHAR(255),
-    data_alteracao TIMESTAMP,
-    perfil_usuario perfil_usuario,
-    ativo BOOLEAN DEFAULT TRUE
-);
-
 -- Cria a tabela endereco
-DROP TABLE IF EXISTS endereco;
-CREATE TABLE endereco (
+CREATE TABLE IF NOT EXISTS endereco (
     id SERIAL PRIMARY KEY,
     cep VARCHAR(9),
     rua VARCHAR(100),
@@ -24,27 +7,40 @@ CREATE TABLE endereco (
     complemento VARCHAR(100),
     bairro VARCHAR(100),
     cidade VARCHAR(100),
-    estado CHAR(2),
-    usuario_id INTEGER NOT NULL,
-    CONSTRAINT fk_usuario FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
+    estado CHAR(2)
 );
+
+-- Cria a tabela usuario
+CREATE TABLE IF NOT EXISTS usuario (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    cpf VARCHAR(14) UNIQUE,
+    email VARCHAR(100) UNIQUE,
+    senha VARCHAR(255),
+    data_alteracao TIMESTAMP,
+    perfil_usuario VARCHAR,
+    ativo BOOLEAN DEFAULT TRUE,
+    endereco_id INTEGER,
+    CONSTRAINT fk_endereco FOREIGN KEY (endereco_id) REFERENCES endereco(id) ON DELETE CASCADE
+);
+
 
 -- Cria a tabela restaurante
-DROP TABLE IF EXISTS restaurante;
-CREATE TABLE restaurante (
+CREATE TABLE IF NOT EXISTS restaurante (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
-    cnpj VARCHAR(18) UNIQUE NOT NULL,
-    telefone VARCHAR(15),
-    email VARCHAR(100) UNIQUE NOT NULL,
-    senha VARCHAR(255) NOT NULL,
+    tipo_cozinha VARCHAR(30),
+    horario_funcionamento TIME(0),
     endereco_id BIGINT,
-    CONSTRAINT fk_endereco FOREIGN KEY (endereco_id) REFERENCES endereco(id)
+    dono_id INTEGER NOT NULL,
+    CONSTRAINT fk_dono FOREIGN KEY (dono_id) REFERENCES usuario(id),
+    CONSTRAINT fk_endereco FOREIGN KEY (endereco_id) REFERENCES endereco(id) ON DELETE CASCADE
 );
 
+
+
 -- Cria a tabela item_cardapio
-DROP TABLE IF EXISTS item_cardapio;
-CREATE TABLE item_cardapio (
+CREATE TABLE IF NOT EXISTS item_cardapio (
     id SERIAL PRIMARY KEY,
     restaurante_id BIGINT NOT NULL,
     nome VARCHAR(255) NOT NULL,

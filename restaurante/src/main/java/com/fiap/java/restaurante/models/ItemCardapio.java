@@ -14,10 +14,6 @@ public class ItemCardapio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "restaurante_id", referencedColumnName = "id")
-    private Restaurante restaurante;
-
     private String nome;
 
     private String descricao;
@@ -27,6 +23,10 @@ public class ItemCardapio {
     private Boolean disponivel;
 
     private String foto;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "restaurante_id")
+    private Restaurante restaurante;
 
     public Boolean isDisponivel() {
         return this.disponivel;

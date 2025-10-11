@@ -16,27 +16,18 @@ import org.springframework.web.bind.annotation.*;
 public class ItemCardapioController implements ItemCardapioControllerAPI {
 
     private final ItemCardapioService itemCardapioService;
-    private final RestauranteRepository restauranteRepository;
 
-    public ItemCardapioController(ItemCardapioService itemCardapioService, RestauranteRepository restauranteRepository) {
+    public ItemCardapioController(ItemCardapioService itemCardapioService) {
         this.itemCardapioService = itemCardapioService;
-        this.restauranteRepository = restauranteRepository;
     }
-    @PostMapping("/itemcardapio")
-    public ResponseEntity<ItemCardapioDTO> salvar(ItemCardapioDTO itemCardapioDTO) {
+    @PostMapping
+    public ResponseEntity<ItemCardapioDTO> salvar(@RequestBody ItemCardapioDTO itemCardapioDTO) {
 
-        Restaurante restaurante = restauranteRepository.findById(itemCardapioDTO.getId())
-                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
-
-        if (restaurante.getDonoRestaurante().getPerfilUsuario() != PerfilUsuario.RESTAURANTE) {
-            return ResponseEntity.status(403).build();
-        }
-
-        return ResponseEntity.status(201).body(itemCardapioService.salvar(itemCardapioDTO, restaurante));
+        return ResponseEntity.status(201).body(itemCardapioService.salvar(itemCardapioDTO));
     }
 
-    @PatchMapping("/editar/dados/{id}")
-    public ResponseEntity<RespostaDTO> editarDados(Long id, ItemCardapioEditaDTO itemCardapioDTO) {
+    @PutMapping("/{id}")
+    public ResponseEntity<RespostaDTO> editarDados(@PathVariable Long id, ItemCardapioEditaDTO itemCardapioDTO) {
         return ResponseEntity.status(200).body(itemCardapioService.editarDados(id, itemCardapioDTO));
     }
 
@@ -47,7 +38,7 @@ public class ItemCardapioController implements ItemCardapioControllerAPI {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ItemCardapioDTO> buscarPorId(Long id) {
+    public ResponseEntity<ItemCardapioDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.status(200).body(itemCardapioService.buscarPorId(id));
     }
 }

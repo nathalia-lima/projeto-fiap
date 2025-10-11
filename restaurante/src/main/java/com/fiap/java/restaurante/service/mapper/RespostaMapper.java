@@ -3,10 +3,7 @@ package com.fiap.java.restaurante.service.mapper;
 import java.util.Optional;
 
 import com.fiap.java.restaurante.DTO.*;
-import com.fiap.java.restaurante.models.Endereco;
-import com.fiap.java.restaurante.models.ItemCardapio;
-import com.fiap.java.restaurante.models.Restaurante;
-import com.fiap.java.restaurante.models.Usuario;
+import com.fiap.java.restaurante.models.*;
 
 public class RespostaMapper {
 
@@ -117,4 +114,5 @@ public class RespostaMapper {
         respostaDTO.setMensagem("Item do cardápio atualizado com sucesso");
         return respostaDTO;
     }
+
 }

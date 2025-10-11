@@ -4,10 +4,13 @@ import com.fiap.java.restaurante.DTO.RespostaDTO;
 import com.fiap.java.restaurante.DTO.RestauranteDTO;
 import com.fiap.java.restaurante.DTO.RestauranteEditaDTO;
 import com.fiap.java.restaurante.exceptions.NotFoundException;
+import com.fiap.java.restaurante.exceptions.UnauthorizedException;
 import com.fiap.java.restaurante.models.Endereco;
+import com.fiap.java.restaurante.models.PerfilUsuario;
 import com.fiap.java.restaurante.models.Restaurante;
 import com.fiap.java.restaurante.models.Usuario;
 import com.fiap.java.restaurante.repository.RestauranteRepository;
+import com.fiap.java.restaurante.repository.UsuarioRepository;
 import com.fiap.java.restaurante.service.mapper.RespostaMapper;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +18,28 @@ import org.springframework.stereotype.Service;
 public class RestauranteService {
 
     private final RestauranteRepository restauranteRepository;
+    private final UsuarioRepository usuarioRepository;
     private final RespostaMapper respostaMapper = new RespostaMapper();
 
-    public RestauranteService(RestauranteRepository restauranteRepository) {
+    public RestauranteService(RestauranteRepository restauranteRepository, UsuarioRepository usuarioRepository) {
         this.restauranteRepository = restauranteRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
-    public RestauranteDTO salvar(RestauranteDTO restauranteDTO, Usuario usuario) {
+    public RestauranteDTO salvar(RestauranteDTO restauranteDTO) {
         Restaurante restaurante = new Restaurante();
         restaurante.setNome(restauranteDTO.getNome());
         restaurante.setTipoCozinha(restauranteDTO.getTipoCozinha());
         restaurante.setHorarioFuncionamento(restauranteDTO.getHorarioFuncionamento());
-        Endereco endereco = respostaMapper.mapEnderecoDTOToEndereco(restauranteDTO.getEndereco());
-        endereco.setRestaurante(restaurante);
+        Endereco endereco = respostaMapper.mapEnderecoDTOToEndereco(restauranteDTO.getEndereco());;
         restaurante.setEndereco(endereco);
-        restaurante.setDonoRestaurante(usuario);
+        Usuario dono = usuarioRepository.findById(restauranteDTO.getIdDono()).orElseThrow(
+                () -> new NotFoundException("Usuário não encontrado - ID: " + restauranteDTO.getIdDono())
+        );
+        if(!dono.getPerfilUsuario().equals(PerfilUsuario.RESTAURANTE)){
+            throw new UnauthorizedException("Usuário não é dono - ID: " + restauranteDTO.getIdDono());
+        }
+        restaurante.setDono(dono);
 
         restauranteRepository.save(restaurante);
         return respostaMapper.mapRestauranteToRestauranteDTO(restaurante);
@@ -62,7 +72,6 @@ public class RestauranteService {
         }
         if (restauranteEditaDTO.getEndereco() != null) {
             Endereco endereco = respostaMapper.mapEditaDadosEnderecoDTOToEndereco(restauranteEditaDTO.getEndereco(), restaurante.getEndereco());
-            endereco.setRestaurante(restaurante);
             restaurante.setEndereco(endereco);
         }
 

@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,12 +31,9 @@ public class Usuario implements UserDetails {
 
     private LocalDateTime dataAlteracao;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
-
-    @OneToOne
-    @JoinColumn(name = "restaurante", referencedColumnName = "id")
-    private Restaurante restaurante;
 
     @Enumerated(EnumType.STRING)
     private PerfilUsuario perfilUsuario;

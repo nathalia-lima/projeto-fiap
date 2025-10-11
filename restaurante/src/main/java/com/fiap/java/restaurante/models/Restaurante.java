@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -16,18 +17,19 @@ public class Restaurante {
 
     private String nome;
 
-    @OneToOne(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
     private String tipoCozinha;
 
-    private String horarioFuncionamento;
-
-    @OneToOne
-    @JoinColumn(name = "dono_restaurante", referencedColumnName = "id")
-    private Usuario donoRestaurante;
+    private LocalTime horarioFuncionamento;
 
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
     List<ItemCardapio> itensCardapio;
+
+    @ManyToOne
+    @JoinColumn(name = "dono_id")
+    private Usuario dono;
 
 }

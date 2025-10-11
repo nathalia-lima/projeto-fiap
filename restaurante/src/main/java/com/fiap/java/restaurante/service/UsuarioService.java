@@ -8,7 +8,6 @@ import com.fiap.java.restaurante.repository.UsuarioRepository;
 import com.fiap.java.restaurante.service.mapper.RespostaMapper;
 import com.fiap.java.restaurante.exceptions.BadRequestException;
 import com.fiap.java.restaurante.exceptions.NotFoundException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
 import jakarta.validation.Valid;
@@ -41,7 +40,6 @@ public class UsuarioService implements UserDetailsService {
         usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
         usuario.setPerfilUsuario(dto.getUsuario());
         Endereco endereco = respostaMapper.mapEnderecoDTOToEndereco(dto.getEndereco());
-        endereco.setUsuario(usuario);
         usuario.setEndereco(endereco);
         usuario.setDataAlteracao(LocalDateTime.now());
         usuarioRepository.save(usuario);                              
@@ -65,7 +63,6 @@ public class UsuarioService implements UserDetailsService {
         
         if (dto.getEndereco() != null) {
             Endereco endereco = respostaMapper.mapEditaDadosEnderecoDTOToEndereco(dto.getEndereco(), usuario.getEndereco());
-            endereco.setUsuario(usuario);
             usuario.setEndereco(endereco);
         }else {
             usuario.setEndereco(usuario.getEndereco());

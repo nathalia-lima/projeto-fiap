@@ -4,21 +4,36 @@ import com.fiap.java.restaurante.DTO.ItemCardapioDTO;
 import com.fiap.java.restaurante.DTO.ItemCardapioEditaDTO;
 import com.fiap.java.restaurante.DTO.RespostaDTO;
 import com.fiap.java.restaurante.exceptions.NotFoundException;
+import com.fiap.java.restaurante.exceptions.UnauthorizedException;
 import com.fiap.java.restaurante.models.ItemCardapio;
+import com.fiap.java.restaurante.models.PerfilUsuario;
 import com.fiap.java.restaurante.models.Restaurante;
 import com.fiap.java.restaurante.repository.ItemCardapioRepository;
+import com.fiap.java.restaurante.repository.RestauranteRepository;
 import com.fiap.java.restaurante.service.mapper.RespostaMapper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ItemCardapioService {
 
     private final ItemCardapioRepository itemCardapioRepository;
+    private final RestauranteRepository restauranteRepository;
     private final RespostaMapper respostaMapper = new RespostaMapper();
 
-    public ItemCardapioService(ItemCardapioRepository itemCardapioRepository) {
+    public ItemCardapioService(ItemCardapioRepository itemCardapioRepository, RestauranteRepository restauranteRepository) {
         this.itemCardapioRepository = itemCardapioRepository;
+        this.restauranteRepository = restauranteRepository;
     }
 
-   public ItemCardapioDTO salvar(ItemCardapioDTO itemCardapioDTO, Restaurante restaurante) {
+   public ItemCardapioDTO salvar(ItemCardapioDTO itemCardapioDTO) {
+       Restaurante restaurante = restauranteRepository.findById(itemCardapioDTO.getRestauranteId())
+               .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+
+       if (restaurante.getDono().getPerfilUsuario() != PerfilUsuario.RESTAURANTE) {
+           throw new UnauthorizedException("Usuário não autorizado a cadastrar produto neste restaurante = ID "+restaurante.getDono().getPerfilUsuario());
+       }
+
        ItemCardapio itemCardapio = new ItemCardapio();
        itemCardapio.setNome(itemCardapioDTO.getNome());
        itemCardapio.setDescricao(itemCardapioDTO.getDescricao());

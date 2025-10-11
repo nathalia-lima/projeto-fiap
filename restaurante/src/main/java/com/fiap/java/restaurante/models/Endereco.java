@@ -1,5 +1,6 @@
 package com.fiap.java.restaurante.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,11 +27,4 @@ public class Endereco {
 
     private String estado;
 
-    @OneToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
-    private Usuario usuario;
-
-    @OneToOne(mappedBy = "endereco", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Restaurante restaurante;
-    
 }
