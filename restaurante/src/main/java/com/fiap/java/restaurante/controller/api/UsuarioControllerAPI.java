@@ -1,6 +1,10 @@
 package com.fiap.java.restaurante.controller.api;
 
-import com.fiap.java.restaurante.DTO.*;
+import com.fiap.java.restaurante.domains.Usuario;
+import com.fiap.java.restaurante.dto.CriaUsuarioDTO;
+import com.fiap.java.restaurante.dto.EditaDadosDTO;
+import com.fiap.java.restaurante.dto.LoginDTO;
+import com.fiap.java.restaurante.dto.TrocaSenhaDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -14,20 +18,20 @@ public interface UsuarioControllerAPI {
             @ApiResponse(description = "Cadastro com sucesso", responseCode = "201"),
             @ApiResponse(description = "1 ou mais Campos inválidos", responseCode = "400",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RespostaDTO.class),
+                            schema = @Schema(implementation = CriaUsuarioDTO.class),
                             examples = @ExampleObject(
                                     value = "{ \"codigo\": \"400\", \"mensagem\": [ \"email : deve ser um endereço de e-mail bem formado\", \"cpf : CPF deve conter 11 dígitos e pode ou não conter pontos e traços\" ] }"
                             )
                     )
             )
     })
-    ResponseEntity<UsuarioDTO> salvar(CriaUsuarioDTO user);
+    ResponseEntity<Usuario> salvar(CriaUsuarioDTO user);
 
     @Operation(description = "Login de usuários", responses = {
             @ApiResponse(description = "Login realizado com sucesso", responseCode = "200"),
             @ApiResponse(description = "Login e/ou senha inválidos", responseCode = "401",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RespostaDTO.class),
+                            schema = @Schema(implementation = CriaUsuarioDTO.class),
                             examples = @ExampleObject(
                                     value = "{\"codigo\": \"401\", \"mensagem\": \"Login e/ou senha inválidos\"}"
                             )
@@ -35,7 +39,7 @@ public interface UsuarioControllerAPI {
             ),
             @ApiResponse(description = "E-mail formatado incorretamente", responseCode = "400",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RespostaDTO.class),
+                            schema = @Schema(implementation = CriaUsuarioDTO.class),
                             examples = @ExampleObject(
                                     value = "{ \"codigo\": \"401\", \"mensagem\": \"email : deve ser um endereço de e-mail bem formado\" }"
                             )
@@ -43,13 +47,13 @@ public interface UsuarioControllerAPI {
 
             )
     })
-    ResponseEntity<RespostaDTO> login(LoginDTO login );
+    ResponseEntity<Usuario> login(LoginDTO login );
 
     @Operation(description = "Edição de usuários", responses = {
             @ApiResponse(description = "Usuário editado com sucesso", responseCode = "200"),
             @ApiResponse(description = "Usuário não encontrado por id", responseCode = "404",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RespostaDTO.class),
+                            schema = @Schema(implementation = CriaUsuarioDTO.class),
                             examples = @ExampleObject(
                                     value = "{ \"codigo\": \"404\", \"mensagem\": \"Usuário não encontrado - ID: 1\" } "
                             )
@@ -57,7 +61,7 @@ public interface UsuarioControllerAPI {
             ),
             @ApiResponse(description = "1 ou mais campos inválidos", responseCode = "400",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RespostaDTO.class),
+                            schema = @Schema(implementation = CriaUsuarioDTO.class),
                             examples = @ExampleObject(
                                     value = "{ \"respostas\": [ \"email : deve ser um endereço de e-mail bem formado\", \"cpf : " +
                                             "CPF deve conter 11 dígitos e pode ou não conter pontos e traços\" ], \"codigo\": 400 }"
@@ -65,13 +69,13 @@ public interface UsuarioControllerAPI {
                     )
             )
     })
-    ResponseEntity<RespostaDTO> editarDados(Long id, EditaDadosDTO user);
+    ResponseEntity<Usuario> editarDados(Long id, EditaDadosDTO user);
 
     @Operation(description = "Troca de senha", responses = {
             @ApiResponse(description = "Senha alterada com sucesso", responseCode = "200"),
             @ApiResponse(description = "Usuário não encontrado por id", responseCode = "404",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RespostaDTO.class),
+                            schema = @Schema(implementation = CriaUsuarioDTO.class),
                             examples = @ExampleObject(
                                     value = "{ \"codigo\": \"404\"\"mensagem\": \"Usuário não encontrado - ID: 1\" }"
                             )
@@ -79,7 +83,7 @@ public interface UsuarioControllerAPI {
             ),
             @ApiResponse(description = "Senha antiga incorreta", responseCode = "403",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RespostaDTO.class),
+                            schema = @Schema(implementation = CriaUsuarioDTO.class),
                             examples = @ExampleObject(
                                     value = "{\"codigo\": \"403\", \"mensagem\": \"Senha antiga incorreta\"}"
                             )
@@ -88,20 +92,20 @@ public interface UsuarioControllerAPI {
             @ApiResponse(description = "Campos \"Nova senha\" e \"Repetir nova senha\" diferentes",
                     responseCode = "400",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RespostaDTO.class),
+                            schema = @Schema(implementation = CriaUsuarioDTO.class),
                             examples = @ExampleObject(
                                     value = "{ \"codigo\": \"400\", \"mensagem\": \"Campos nova senha e repetir nova senha devem ser iguais\" }"
                             )
                     )
             ),
     })
-    ResponseEntity<RespostaDTO> trocarSenha(Long id, TrocaSenhaDTO user);
+    ResponseEntity<Usuario> trocarSenha(Long id, TrocaSenhaDTO user);
 
     @Operation(description = "Exclusão de usuários", responses = {
             @ApiResponse(description = "Usuário excluído com sucesso", responseCode = "200"),
             @ApiResponse(description = "Usuário não encontrado", responseCode = "404",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RespostaDTO.class),
+                            schema = @Schema(implementation = CriaUsuarioDTO.class),
                             examples = @ExampleObject(
                                     value = "{ \"codigo\": \"404\" , \"mensagem\": \"Usuário não encontrado - ID: 1\" }"
                             )
@@ -114,12 +118,12 @@ public interface UsuarioControllerAPI {
             @ApiResponse(description = "No Content", responseCode = "204"),
             @ApiResponse(description = "Usuário não encontrado", responseCode = "404",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RespostaDTO.class),
+                            schema = @Schema(implementation = CriaUsuarioDTO.class),
                             examples = @ExampleObject(
                                     value = "{ \"codigo\": \"404\" , \"mensagem\": \"Usuário não encontrado - ID: 1\" }"
                             )
                     )
             )
     })
-    ResponseEntity<UsuarioDTO>  buscarPorId(Long id);
+    ResponseEntity<Usuario>  buscarPorId(Long id);
 }

@@ -8,10 +8,10 @@
 		<version>3.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.fiap.java.restaurante</groupId>
-	<artifactId>restaurante</artifactId>
+	<groupId>com.fiap.java.restauranteEntity</groupId>
+	<artifactId>restauranteEntity</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>restaurante</name>
+	<name>restauranteEntity</name>
 	<description>Projeto de Pós Graduação FIAP</description>
 	<url/>
 	<licenses>
