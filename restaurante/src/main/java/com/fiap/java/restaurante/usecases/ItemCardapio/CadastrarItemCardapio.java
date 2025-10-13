@@ -30,14 +30,16 @@ public class CadastrarItemCardapio {
                 itemCardapioDTO.getFoto()
         );
         return respostaMapper.itemCardapioEntitytoItemCardapio(
-                itemCardapioRepository.save(respostaMapper.itemCardapioToItemCardapioEntity(itemCardapio)));
+                itemCardapioRepository.save(
+                        respostaMapper.itemCardapioToItemCardapioEntity(itemCardapio, restaurante)
+                ));
     }
 
     private Restaurante validarRestaurante(Long idRestaurante) {
         return respostaMapper.restauranteEntityToRestaurante(
                 restauranteRepository.findById(idRestaurante)
-                        .orElseThrow(() -> new RuntimeException("Restaurante não encontrado - ID: " + idRestaurante))
-        );
+                        .orElseThrow(() -> new RuntimeException("Restaurante não encontrado")));
+
     }
 
 }

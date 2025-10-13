@@ -26,6 +26,17 @@ public class Usuario {
         this.dataAlteracao = LocalDateTime.now();
     }
 
+    public Usuario(Long id, String nome, String cpf, String email, String senha, EnderecoDTO endereco, Long usuario, LocalDateTime dataAlteracao) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.senha = senha;
+        this.endereco = endereco;
+        this.usuario = usuario;
+        this.dataAlteracao = dataAlteracao;
+    }
+
     public void atualizarDados(String email, Long usuario, EnderecoDTO endereco) {
         if (email != null) {
             this.email = email;

@@ -10,4 +10,9 @@ public class PerfilUsuario {
     public PerfilUsuario(String nome) {
         this.nome = nome;
     }
+
+    public PerfilUsuario(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 }

@@ -1,6 +1,7 @@
 package com.fiap.java.restaurante.insfrastucture.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @Setter
 @Table(name = "item_cardapio")
 @NoArgsConstructor
+@AllArgsConstructor
 public class ItemCardapioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,15 +32,6 @@ public class ItemCardapioEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "restaurante_id")
     private RestauranteEntity restaurante;
-
-    public ItemCardapioEntity(String nome, String descricao, BigDecimal preco, Boolean disponivel, String foto, RestauranteEntity restaurante) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.preco = preco;
-        this.disponivel = disponivel;
-        this.foto = foto;
-        this.restaurante = restaurante;
-    }
 
     public Boolean isDisponivel() {
         return this.disponivel;

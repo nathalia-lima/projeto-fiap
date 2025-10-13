@@ -16,7 +16,7 @@ import java.util.Optional;
 public class LoginUsuario {
 
     private final UsuarioRepository usuarioRepository;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final RespostaMapper respostaMapper;
 
     public Usuario login(LoginDTO loginDTO) {

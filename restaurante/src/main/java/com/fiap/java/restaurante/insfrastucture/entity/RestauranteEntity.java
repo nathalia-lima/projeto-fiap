@@ -37,9 +37,4 @@ public class RestauranteEntity {
     @ManyToOne
     @JoinColumn(name = "dono_id")
     private UsuarioEntity dono;
-
-    public RestauranteEntity(Long restauranteId) {
-    }
-    public RestauranteEntity(String nome, EnderecoEntity enderecoEntity, String tipoCozinha, String horarioFuncionamento, Long idDono) {
-    }
 }

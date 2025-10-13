@@ -6,12 +6,16 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Valid
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class EnderecoDTO{
         @NotBlank
         @Pattern(regexp = "\\d{5}-\\d{3}", message = "CEP deve estar no formato 00000-000")
@@ -28,7 +32,4 @@ public class EnderecoDTO{
         @NotBlank
         @Size(min = 2, max = 2, message = "Escreva somente a sigla do estado!")
         private String estado;
-
-        public EnderecoDTO(String rua, String numero, String cidade, String estado, String cep) {
-        }
 }

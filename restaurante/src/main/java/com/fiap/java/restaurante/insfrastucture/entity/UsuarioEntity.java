@@ -2,7 +2,9 @@ package com.fiap.java.restaurante.insfrastucture.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +15,8 @@ import java.util.Collection;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "usuario")
 public class UsuarioEntity implements UserDetails {
     @Id
@@ -39,7 +43,8 @@ public class UsuarioEntity implements UserDetails {
     @JoinColumn(name = "perfil_usuario_id", nullable = false)
     private PerfilUsuarioEntity perfilUsuarioEntity;
 
-    public UsuarioEntity(String nome, String cpf, String email, String senha, EnderecoEntity enderecoEntity, Long usuario) {
+    public UsuarioEntity(Long idDono) {
+        this.id = idDono;
     }
 
 

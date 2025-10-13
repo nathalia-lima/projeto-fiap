@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS restaurante (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
     tipo_cozinha VARCHAR(30),
-    horario_funcionamento TIME(0),
+    horario_funcionamento VARCHAR(30),
     endereco_id BIGINT,
     dono_id INTEGER NOT NULL,
     CONSTRAINT fk_dono FOREIGN KEY (dono_id) REFERENCES usuario(id),

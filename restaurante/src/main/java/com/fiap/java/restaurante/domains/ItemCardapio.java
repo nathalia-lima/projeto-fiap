@@ -23,6 +23,16 @@ public class ItemCardapio {
         this.foto = foto;
     }
 
+    public ItemCardapio(Long id, Long restauranteId, String nome, String descricao, BigDecimal preco, Boolean disponivel, String foto) {
+        this.id = id;
+        this.restauranteId = restauranteId;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.disponivel = disponivel;
+        this.foto = foto;
+    }
+
     public void atualizarItemCardapio(String nome, String descricao, BigDecimal preco, Boolean disponivel, String foto){
         if(nome != null){
             this.nome = nome;

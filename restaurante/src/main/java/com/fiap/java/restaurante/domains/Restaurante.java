@@ -20,6 +20,15 @@ public class Restaurante {
         this.idDono = idDono;
     }
 
+    public Restaurante(Long id, String nome, EnderecoDTO endereco, String tipoCozinha, String horarioFuncionamento, Long idDono) {
+        this.id = id;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.tipoCozinha = tipoCozinha;
+        this.horarioFuncionamento = horarioFuncionamento;
+        this.idDono = idDono;
+    }
+
     public void atualizarDados(String nome, String tipoCozinha, String horarioFuncionamento, EnderecoDTO endereco) {
         if (nome != null) {
             this.nome = nome;
