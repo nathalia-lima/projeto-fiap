@@ -27,7 +27,7 @@ public class ItemCardapioController implements ItemCardapioControllerAPI {
         return ResponseEntity.status(201).body(cadastrarItemCardapio.salvar(itemCardapioDTO));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/editar/dados/{id}")
     public ResponseEntity<ItemCardapio> editarDados(@PathVariable Long id, ItemCardapioEditaDTO itemCardapioDTO) {
         return ResponseEntity.status(200).body(editarItemCardapio.editarDados(id, itemCardapioDTO));
     }
