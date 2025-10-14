@@ -10,6 +10,8 @@ import com.fiap.java.restaurante.insfrastucture.repository.RestauranteRepository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper.itemCardapioEntitytoItemCardapio;
+
 @Service
 @RequiredArgsConstructor
 public class EditarItemCardapio {
@@ -18,11 +20,12 @@ public class EditarItemCardapio {
     private final RespostaMapper respostaMapper;
 
     public ItemCardapio editarDados(Long id, ItemCardapioEditaDTO editaDadosDTO) {
-        ItemCardapio itemCardapioEncontrado = respostaMapper.itemCardapioEntitytoItemCardapio(itemCardapioRepository.findById(id)
+        ItemCardapio itemCardapioEncontrado = itemCardapioEntitytoItemCardapio(itemCardapioRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Item do cardapio não encontrado - ID: " + id)));
 
         Restaurante restaurante = respostaMapper.restauranteEntityToRestaurante(restauranteRepository.findById(itemCardapioEncontrado.getRestauranteId())
                 .orElseThrow(() -> new NotFoundException("Restaurante não encontrado para o item do cardápio - ID: " + itemCardapioEncontrado.getRestauranteId())));
+
 
         itemCardapioEncontrado.atualizarItemCardapio(
                 editaDadosDTO.getNome(),
@@ -32,7 +35,7 @@ public class EditarItemCardapio {
                 editaDadosDTO.getFoto()
         );
 
-        return respostaMapper.itemCardapioEntitytoItemCardapio(
+        return itemCardapioEntitytoItemCardapio(
                 itemCardapioRepository.save(respostaMapper.itemCardapioToItemCardapioEntity(itemCardapioEncontrado, restaurante))
         );
     }

@@ -28,12 +28,12 @@ public class ItemCardapioController implements ItemCardapioControllerAPI {
     }
 
     @PatchMapping("/editar/dados/{id}")
-    public ResponseEntity<ItemCardapio> editarDados(@PathVariable Long id, ItemCardapioEditaDTO itemCardapioDTO) {
+    public ResponseEntity<ItemCardapio> editarDados(@PathVariable Long id, @RequestBody ItemCardapioEditaDTO itemCardapioDTO) {
         return ResponseEntity.status(200).body(editarItemCardapio.editarDados(id, itemCardapioDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluir(Long id) {
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
         excluirItemCardapio.excluir(id);
         return ResponseEntity.status(204).build();
     }

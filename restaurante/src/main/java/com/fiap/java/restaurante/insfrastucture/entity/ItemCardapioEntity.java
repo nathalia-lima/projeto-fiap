@@ -29,8 +29,8 @@ public class ItemCardapioEntity {
 
     private String foto;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "restaurante_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurante_id", nullable = false)
     private RestauranteEntity restaurante;
 
     public Boolean isDisponivel() {

@@ -3,13 +3,13 @@ package com.fiap.java.restaurante.usecases.ItemCardapio;
 import com.fiap.java.restaurante.domains.ItemCardapio;
 import com.fiap.java.restaurante.domains.Restaurante;
 import com.fiap.java.restaurante.dto.ItemCardapioDTO;
-import com.fiap.java.restaurante.insfrastucture.entity.ItemCardapioEntity;
-import com.fiap.java.restaurante.insfrastucture.entity.RestauranteEntity;
 import com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper;
 import com.fiap.java.restaurante.insfrastucture.repository.ItemCardapioRepository;
 import com.fiap.java.restaurante.insfrastucture.repository.RestauranteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper.itemCardapioEntitytoItemCardapio;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +29,7 @@ public class CadastrarItemCardapio {
                 itemCardapioDTO.getDisponivel(),
                 itemCardapioDTO.getFoto()
         );
-        return respostaMapper.itemCardapioEntitytoItemCardapio(
+        return itemCardapioEntitytoItemCardapio(
                 itemCardapioRepository.save(
                         respostaMapper.itemCardapioToItemCardapioEntity(itemCardapio, restaurante)
                 ));
