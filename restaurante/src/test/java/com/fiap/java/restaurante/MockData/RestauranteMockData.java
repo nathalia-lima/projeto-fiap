@@ -21,14 +21,14 @@ public class RestauranteMockData {
                   },
                   "tipoCozinha": "Italiana",
                   "horarioFuncionamento": "08:00-18:00",
-                  "idDono": 4
+                  "idDono": 2
                 }""";
     }
 
     public static Restaurante criarSalvarOuBuscarRestauranteOutput() {
         return new Restaurante(1L, "Restaurante Sabor & Arte",
                 criarEndereco(),
-                "Italiana", "08:00-18:00", 4L);
+                "Italiana", "08:00-18:00", 2L);
     }
 
     public static String criarEditarRestauranteInput() {
@@ -52,7 +52,7 @@ public class RestauranteMockData {
     public static Restaurante criarEditarRestauranteOutput() {
         return new Restaurante(1L, "Restaurante Sabor & Arte - Atualizado",
                 criarEndereco(),
-                "Italiana", "08:00-18:00", 4L);
+                "Italiana", "08:00-18:00", 2L);
     }
 
 
