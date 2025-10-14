@@ -5,24 +5,26 @@ import com.fiap.java.restaurante.domains.ItemCardapio;
 public class ItemCardapioMockData {
 
     public static String criarSalvarItemCardapioInput(){
-        return "{\n" +
-                "  \"restauranteId\": 1,\n" +
-                "  \"nome\": \"Pizza Margherita\",\n" +
-                "  \"descricao\": \"Pizza tradicional com tomate, mussarela e manjericão.\",\n" +
-                "  \"preco\": 39.90,\n" +
-                "  \"disponivel\": true,\n" +
-                "  \"foto\": \"https://exemplo.com/imagens/pizza-margherita.jpg\"\n" +
-                "}";
+        return """
+                {
+                  "restauranteId": 1,
+                  "nome": "Pizza Margherita",
+                  "descricao": "Pizza tradicional com tomate, mussarela e manjericão.",
+                  "preco": 39.90,
+                  "disponivel": true,
+                  "foto": "https://exemplo.com/imagens/pizza-margherita.jpg"
+                }""";
     }
 
     public static String criarEditarItemCardapioInput(){
-        return "{\n" +
-                "  \"nome\": \"Pizza Pepperoni\",\n" +
-                "  \"descricao\": \"Pizza com pepperoni, mussarela e molho de tomate.\",\n" +
-                "  \"preco\": 45.50,\n" +
-                "  \"disponivel\": true,\n" +
-                "  \"foto\": \"https://exemplo.com/imagens/pizza-pepperoni.jpg\"\n" +
-                "}";
+        return """
+                {
+                  "nome": "Pizza Pepperoni",
+                  "descricao": "Pizza com pepperoni, mussarela e molho de tomate.",
+                  "preco": 45.50,
+                  "disponivel": true,
+                  "foto": "https://exemplo.com/imagens/pizza-pepperoni.jpg"
+                }""";
     }
 
     public static ItemCardapio criarSalvaroOuBuscarItemCardapioOutput(){

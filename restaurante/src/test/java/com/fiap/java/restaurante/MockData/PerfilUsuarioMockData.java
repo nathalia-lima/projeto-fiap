@@ -7,9 +7,10 @@ public class PerfilUsuarioMockData {
 
 
     public static String criarSalvarPerfilUsuarioInput() {
-        return "{\n" +
-                "  \"nome\": \"FUNCIONARIO\"\n" +
-                "}";
+        return """
+                {
+                  "nome": "FUNCIONARIO"
+                }""";
     }
     public static PerfilUsuario criarSalvarOuBuscarPerfilUsuarioOutput() {
         return new PerfilUsuario(4L, "FUNCIONARIO");
