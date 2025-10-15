@@ -8,6 +8,7 @@ import com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper;
 import com.fiap.java.restaurante.insfrastucture.repository.ItemCardapioRepository;
 import com.fiap.java.restaurante.insfrastucture.repository.RestauranteRepository;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -33,6 +34,7 @@ class CadastrarItemCardapioIntegrationTest {
     private CadastrarItemCardapio cadastrarItemCardapio;
 
     @Test
+    @DisplayName("Dado um input valido, deve cadastrar o item do cardapio com sucesso")
     void salvarComSucesso() throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();

@@ -15,6 +15,6 @@ public class BuscarPerfilUsuario {
 
    public PerfilUsuario buscarPorId(Long id) {
        return respostaMapper.perfilUsuarioEntityToPerfilUsuario(perfilUsuarioRepository.findById(id)
-               .orElseThrow(() -> new NotFoundException("Item do cardapio não encontrado - ID: " + id)));
+               .orElseThrow(() -> new NotFoundException("Perfil Usuario não encontrado - ID: " + id)));
    }
 }

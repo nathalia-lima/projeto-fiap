@@ -1,5 +1,4 @@
-package com.fiap.java.restaurante.usecases.ItemCardapio;
-
+package com.fiap.java.restaurante.usecases.PerfilUsuario;
 
 import com.fiap.java.restaurante.exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -18,20 +17,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @Transactional
 @Sql(scripts = {"/db_load.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = {"/db_clean.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-public class ExcluirItemCardapioIntegrationTest {
+class ExcluirPerfilUsuarioIntegrationTest {
 
     @Autowired
-    private ExcluirItemCardapio excluirItemCardapio;
+    ExcluirPerfilUsuario excluirPerfilUsuario;
 
     @Test
-    @DisplayName("Dado um input valido, deve excluir o item do cardapio com sucesso")
+    @DisplayName("Dado um input valido ao tentar excluir uma segunda vez, deve lançar NotFoundException indicando que o perfil do usuario foi excluido com sucesso")
     void excluirComSucesso() {
 
-        excluirItemCardapio.excluir(1L);
+        excluirPerfilUsuario.excluir(1L);
 
-        var exception = assertThrows(NotFoundException.class, () -> excluirItemCardapio.excluir(5L));
+        var exception = assertThrows(NotFoundException.class, () -> excluirPerfilUsuario.excluir(1L));
 
-        assertEquals("Item do cardapio não encontrado - ID: 5", exception.getMessage());
+        assertEquals("Perfil usuario não encontrado - ID: 1", exception.getMessage());
 
     }
 }
