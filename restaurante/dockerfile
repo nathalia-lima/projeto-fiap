@@ -13,7 +13,7 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 
 # Realiza o build da aplicação
-RUN mvn clean package -DskipTests
+RUN mvn clean package -Dtest=!*Repository*
 
 # Stage 2: Cria a imagem final
 FROM eclipse-temurin:21-alpine-3.22
