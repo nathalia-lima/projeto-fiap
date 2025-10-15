@@ -2,13 +2,8 @@ package com.fiap.java.restaurante.usecases.ItemCardapio;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fiap.java.restaurante.domains.ItemCardapio;
-import com.fiap.java.restaurante.domains.Restaurante;
-import com.fiap.java.restaurante.dto.EditaDadosDTO;
 import com.fiap.java.restaurante.dto.ItemCardapioEditaDTO;
 import com.fiap.java.restaurante.exceptions.NotFoundException;
-import com.fiap.java.restaurante.insfrastucture.entity.ItemCardapioEntity;
-import com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper;
 import com.fiap.java.restaurante.insfrastucture.repository.ItemCardapioRepository;
 import com.fiap.java.restaurante.insfrastucture.repository.RestauranteRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -18,11 +13,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
 import java.util.Optional;
 
-import static com.fiap.java.restaurante.MockData.ItemCardapioMockData.*;
-import static com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper.itemCardapioEntitytoItemCardapio;
+import static com.fiap.java.restaurante.MockData.ItemCardapioMockData.criarEditarItemCardapioEntityOutput;
+import static com.fiap.java.restaurante.MockData.ItemCardapioMockData.criarEditarItemCardapioInput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
@@ -40,9 +34,6 @@ class EditarItemCardapioTest {
 
     @Mock
     private RestauranteRepository restauranteRepository;
-
-    @Mock
-    private RespostaMapper respostaMapper;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 

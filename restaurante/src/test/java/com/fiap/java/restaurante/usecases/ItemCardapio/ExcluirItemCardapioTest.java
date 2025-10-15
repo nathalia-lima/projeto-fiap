@@ -1,8 +1,11 @@
 package com.fiap.java.restaurante.usecases.ItemCardapio;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fiap.java.restaurante.domains.ItemCardapio;
+import com.fiap.java.restaurante.domains.Restaurante;
 import com.fiap.java.restaurante.dto.ItemCardapioEditaDTO;
 import com.fiap.java.restaurante.exceptions.NotFoundException;
+import com.fiap.java.restaurante.insfrastucture.entity.RestauranteEntity;
 import com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper;
 import com.fiap.java.restaurante.insfrastucture.repository.ItemCardapioRepository;
 import com.fiap.java.restaurante.insfrastucture.repository.RestauranteRepository;
@@ -15,11 +18,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.fiap.java.restaurante.MockData.ItemCardapioMockData.criarEditarItemCardapioEntityOutput;
-import static com.fiap.java.restaurante.MockData.ItemCardapioMockData.criarEditarItemCardapioInput;
+import static com.fiap.java.restaurante.MockData.ItemCardapioMockData.*;
+import static com.fiap.java.restaurante.MockData.RestauranteMockData.criarRestauranteEntityOutput;
+import static com.fiap.java.restaurante.MockData.RestauranteMockData.criarSalvarOuBuscarRestauranteOutput;
+import static com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper.itemCardapioEntitytoItemCardapio;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ExcluirItemCardapioTest {

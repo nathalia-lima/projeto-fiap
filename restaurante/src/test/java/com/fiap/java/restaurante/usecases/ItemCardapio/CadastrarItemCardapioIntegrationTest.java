@@ -30,15 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CadastrarItemCardapioIntegrationTest {
 
     @Autowired
-    private ItemCardapioRepository itemCardapioRepository;
-
-    @Autowired
-    private RestauranteRepository restauranteRepository;
-
-    @Autowired
-    private RespostaMapper respostaMapper;
-
-    @Autowired
     private CadastrarItemCardapio cadastrarItemCardapio;
 
     @Test

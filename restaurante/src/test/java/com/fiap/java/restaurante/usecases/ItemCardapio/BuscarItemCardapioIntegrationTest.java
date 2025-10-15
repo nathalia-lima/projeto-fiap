@@ -1,21 +1,16 @@
 package com.fiap.java.restaurante.usecases.ItemCardapio;
 
-import com.fiap.java.restaurante.exceptions.NotFoundException;
-import com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper;
-import com.fiap.java.restaurante.insfrastucture.repository.ItemCardapioRepository;
+
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+
 
 @SpringBootTest(properties = "spring.flyway.enabled=false")
 @AutoConfigureTestDatabase
@@ -26,12 +21,6 @@ class BuscarItemCardapioIntegrationTest {
 
     @Autowired
     private BuscarItemCardapio buscarItemCardapio;
-
-    @Autowired
-    private ItemCardapioRepository itemCardapioRepository;
-
-    @Autowired
-    private RespostaMapper respostaMapper;
 
 
     @Test

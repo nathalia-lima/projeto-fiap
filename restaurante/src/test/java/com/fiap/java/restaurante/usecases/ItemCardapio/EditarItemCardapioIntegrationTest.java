@@ -3,9 +3,6 @@ package com.fiap.java.restaurante.usecases.ItemCardapio;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fiap.java.restaurante.dto.ItemCardapioEditaDTO;
-import com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper;
-import com.fiap.java.restaurante.insfrastucture.repository.ItemCardapioRepository;
-import com.fiap.java.restaurante.insfrastucture.repository.RestauranteRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import static com.fiap.java.restaurante.MockData.ItemCardapioMockData.*;
+import static com.fiap.java.restaurante.MockData.ItemCardapioMockData.criarEditarItemCardapioInput;
+import static com.fiap.java.restaurante.MockData.ItemCardapioMockData.criarEditarItemCardapioOutput;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(properties = "spring.flyway.enabled=false")
@@ -25,15 +23,6 @@ class EditarItemCardapioIntegrationTest {
 
     @Autowired
     private EditarItemCardapio editarItemCardapio;
-
-    @Autowired
-    private ItemCardapioRepository itemCardapioRepository;
-
-    @Autowired
-    private RestauranteRepository restauranteRepository;
-
-    @Autowired
-    private RespostaMapper respostaMapper;
 
     @Test
     void editarDadosComSucesso() throws JsonProcessingException {
