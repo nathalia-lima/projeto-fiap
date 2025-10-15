@@ -8,10 +8,10 @@
 		<version>3.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.fiap.java.restaurante</groupId>
-	<artifactId>restaurante</artifactId>
+	<groupId>com.fiap.java.restauranteEntity</groupId>
+	<artifactId>restauranteEntity</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>restaurante</name>
+	<name>restauranteEntity</name>
 	<description>Projeto de Pós Graduação FIAP</description>
 	<url/>
 	<licenses>
@@ -47,6 +47,21 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-database-postgresql</artifactId>
 		</dependency>
@@ -80,6 +95,26 @@
 			<version>1.18.32</version>
 			<scope>provided</scope>
 		</dependency>
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.20.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.1.214</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 
 	<build>
