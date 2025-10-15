@@ -1,8 +1,13 @@
 package com.fiap.java.restaurante.MockData;
 
 import com.fiap.java.restaurante.domains.Restaurante;
+import com.fiap.java.restaurante.insfrastucture.entity.RestauranteEntity;
+import com.fiap.java.restaurante.insfrastucture.entity.UsuarioEntity;
+
+import java.util.ArrayList;
 
 import static com.fiap.java.restaurante.MockData.EnderecoMockData.criarEndereco;
+import static com.fiap.java.restaurante.MockData.EnderecoMockData.criarEnderecoEntity;
 
 public class RestauranteMockData {
 
@@ -53,6 +58,12 @@ public class RestauranteMockData {
         return new Restaurante(1L, "Restaurante Sabor & Arte - Atualizado",
                 criarEndereco(),
                 "Italiana", "08:00-18:00", 2L);
+    }
+
+    public static RestauranteEntity criarRestauranteEntityOutput() {
+        return new RestauranteEntity(1L, "Restaurante Sabor & Arte",
+                criarEnderecoEntity(),
+                "Italiana", "08:00-18:00", new ArrayList<>(),new UsuarioEntity());
     }
 
 

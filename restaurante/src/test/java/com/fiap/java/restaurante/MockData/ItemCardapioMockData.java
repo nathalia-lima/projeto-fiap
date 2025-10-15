@@ -1,6 +1,10 @@
 package com.fiap.java.restaurante.MockData;
 
 import com.fiap.java.restaurante.domains.ItemCardapio;
+import com.fiap.java.restaurante.insfrastucture.entity.ItemCardapioEntity;
+import com.fiap.java.restaurante.insfrastucture.entity.RestauranteEntity;
+
+import static com.fiap.java.restaurante.MockData.RestauranteMockData.criarRestauranteEntityOutput;
 
 public class ItemCardapioMockData {
 
@@ -27,7 +31,8 @@ public class ItemCardapioMockData {
                 }""";
     }
 
-    public static ItemCardapio criarSalvaroOuBuscarItemCardapioOutput(){
+    public static ItemCardapio
+    criarSalvaroOuBuscarItemCardapioOutput(){
         return new ItemCardapio(
                 1L,
                 1L,
@@ -50,6 +55,18 @@ public class ItemCardapioMockData {
                 "https://exemplo.com/imagens/pizza-pepperoni.jpg"
         );
 
+    }
+
+    public static ItemCardapioEntity criarEditarItemCardapioEntityOutput(){
+        return new ItemCardapioEntity(
+                1L,
+                "Pizza Pepperoni",
+                "Pizza com pepperoni, mussarela e molho de tomate.",
+                new java.math.BigDecimal("45.50"),
+                true,
+                "https://exemplo.com/imagens/pizza-pepperoni.jpg",
+                criarRestauranteEntityOutput()
+                );
     }
 
 
