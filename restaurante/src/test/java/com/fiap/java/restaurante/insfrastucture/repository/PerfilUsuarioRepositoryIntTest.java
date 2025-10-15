@@ -1,5 +1,6 @@
 package com.fiap.java.restaurante.insfrastucture.repository;
 
+import com.fiap.java.restaurante.insfrastucture.container.BasePostgresTestContainer;
 import com.fiap.java.restaurante.insfrastucture.entity.PerfilUsuarioEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,7 +19,7 @@ import static org.junit.Assert.*;
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PerfilUsuarioRepositoryTest {
+public class PerfilUsuarioRepositoryIntTest extends BasePostgresTestContainer {
     @Autowired
     private PerfilUsuarioRepository perfilUsuarioRepository;
 

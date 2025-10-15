@@ -6,6 +6,7 @@ import com.fiap.java.restaurante.insfrastucture.entity.PerfilUsuarioEntity;
 import com.fiap.java.restaurante.insfrastucture.entity.RestauranteEntity;
 import com.fiap.java.restaurante.insfrastucture.entity.UsuarioEntity;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;

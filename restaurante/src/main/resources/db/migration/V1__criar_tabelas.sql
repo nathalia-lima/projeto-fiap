@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS usuario (
     email VARCHAR(100) UNIQUE,
     senha VARCHAR(255),
     data_alteracao TIMESTAMP,
-    perfil_usuario_id INTEGER,
+    perfil_usuario_id INTEGER NOT NULL,
     ativo BOOLEAN DEFAULT TRUE,
     endereco_id INTEGER,
     CONSTRAINT fk_endereco FOREIGN KEY (endereco_id) REFERENCES endereco(id) ON DELETE CASCADE,
