@@ -8,6 +8,7 @@ import com.fiap.java.restaurante.insfrastucture.mapper.RespostaMapper;
 import com.fiap.java.restaurante.insfrastucture.repository.ItemCardapioRepository;
 import com.fiap.java.restaurante.insfrastucture.repository.RestauranteRepository;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,6 +39,7 @@ class CadastrarItemCardapioTest {
     private CadastrarItemCardapio cadastrarItemCardapio;
 
     @Test
+    @DisplayName("Dado um input invalido, deve lancar uma RuntimeException indicando que o restaurante nao foi encontrado")
     void salvarItemCardapioErroRestauranteNaoEncontrado() throws JsonProcessingException {
 
         var input = new ObjectMapper().readValue(criarSalvarItemCardapioInput(), ItemCardapioDTO.class);
